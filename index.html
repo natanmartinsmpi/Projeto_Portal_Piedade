@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Assistência Piedade - PWA</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="Logo_Portal_Piedade.png" />
+  <meta name="theme-color" content="#1B365D">
+</head>
+<body>
+
+  <!-- Cabeçalho Institucional com Avatar -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <img src="Logo_Portal_Piedade.png" alt="Logo Portal Piedade" class="logo-img">
+      <h1>Portal Piedade</h1>
+    </div>
+    <div class="user-profile" id="user-badge">
+      <span class="avatar">👤</span>
+      <span class="user-name">Entrar</span>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- CARTÃO DE BOAS-VINDAS E COMANDO DE VOZ (RF03) -->
+    <section class="welcome-card">
+      <h2>Olá! Como você se sente hoje?</h2>
+      <p>Estamos aqui para te ouvir. Toque no microfone para falar por voz em momentos de crise ou ansiedade.</p>
+      
+      <!-- Botão Central de Microfone (Protótipo Figma) -->
+      <div class="voice-container">
+        <button type="button" id="btn-voice" class="btn-voice-main">
+          <span class="mic-icon">🎙️</span>
+        </button>
+        <span id="voice-status" class="voice-label">Toque para acionar comando de voz</span>
+      </div>
+    </section>
+
+    <!-- PAINEL PRINCIPAL DE 5 CARDS (Design do Figma) -->
+    <section class="grid-menu">
+      
+      <!-- Card 1: Chat Assistido -->
+      <div class="menu-card primary-card" id="card-chat">
+        <div class="card-icon">💬</div>
+        <div class="card-info">
+          <h3>Chat Assistido</h3>
+          <p>Acolhimento imediato com IA e exercícios de respiração</p>
+        </div>
+        <span class="badge-urgent">24h</span>
+      </div>
+
+      <!-- Card 2: Mapeamento de Sintomas -->
+      <div class="menu-card" id="card-sintomas">
+        <div class="card-icon">🩺</div>
+        <div class="card-info">
+          <h3>Meu Bem-estar</h3>
+          <p>Mapeie dores físicas e sintomas psicossomáticos</p>
+        </div>
+      </div>
+
+      <!-- Card 3: Agenda e Consultas -->
+      <div class="menu-card" id="card-agenda">
+        <div class="card-icon">📅</div>
+        <div class="card-info">
+          <h3>Agenda & Apoio</h3>
+          <p>Rede de psicólogos e profissionais voluntários</p>
+        </div>
+      </div>
+
+      <!-- Card 4: Meus Medicamentos -->
+      <div class="menu-card" id="card-remedios">
+        <div class="card-icon">💊</div>
+        <div class="card-info">
+          <h3>Meus Medicamentos</h3>
+          <p>Lembretes e controle de prescrições médicas</p>
+        </div>
+      </div>
+
+      <!-- Card 5: Biblioteca de Saúde -->
+      <div class="menu-card" id="card-biblioteca">
+        <div class="card-icon">📚</div>
+        <div class="card-info">
+          <h3>Biblioteca de Saúde</h3>
+          <p>Guia de autocuidado e conteúdos educativos</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- MODAL 1: AUTENTICAÇÃO E CADASTRO (RF01) -->
+    <div class="modal-overlay" id="modal-auth" style="display: none;">
+      <div class="modal-content">
+        <button class="modal-close" id="close-auth">&times;</button>
+        
+        <div class="auth-tabs">
+          <button id="tab-login" class="tab-btn active" type="button">Entrar</button>
+          <button id="tab-cadastro" class="tab-btn" type="button">Cadastre-se</button>
+        </div>
+
+        <form id="form-login" class="auth-form">
+          <h2>🔐 Acesso Seguro</h2>
+          <input type="email" id="login-email" placeholder="Seu e-mail" required>
+          <input type="password" id="login-senha" placeholder="Sua senha" required>
+          <button type="submit" class="btn-primary">Entrar no Portal</button>
+          <button type="button" id="btn-biometria" class="btn-secondary">🔑 Entrar por Biometria</button>
+        </form>
+
+        <form id="form-cadastro" class="auth-form" style="display: none;">
+          <h2>📝 Criar Nova Conta</h2>
+          <input type="text" id="cad-nome" placeholder="Seu nome ou apelido" required>
+          <input type="email" id="cad-email" placeholder="Seu e-mail" required>
+          <input type="password" id="cad-senha" placeholder="Crie uma senha forte" required>
+          <input type="tel" id="cad-emergencia" placeholder="Contato de Emergência">
+          <button type="submit" class="btn-primary">Concluir Cadastro</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL 2: CHATBOT E RESPIRAÇÃO GUIADA (RF05) -->
+    <div class="modal-overlay" id="modal-chatbot" style="display: none;">
+      <div class="modal-content">
+        <button class="modal-close" id="close-chat">&times;</button>
+        <h2>💬 Chatbot de Acolhimento</h2>
+        <div class="chat-window">
+          <div class="chat-msg bot">
+            Olá! Estou aqui com você. Se estiver sentindo ansiedade, gastrite ou pânico, vamos fazer um exercício de respiração juntos.
+          </div>
+        </div>
+        <button type="button" id="btn-respiracao" class="btn-calm">🫁 Iniciar Exercício Respiratório 4-4-4</button>
+        
+        <div id="container-respiracao" style="display:none;">
+          <div class="circle-breath" id="circle-breath">
+            <span id="breath-text">Inspirar</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 3: SELEÇÃO DE SINTOMAS PSICOSSOMÁTICOS (RF02) -->
+    <div class="modal-overlay" id="modal-sintomas" style="display: none;">
+      <div class="modal-content">
+        <button class="modal-close" id="close-sintomas">&times;</button>
+        <h2>🩺 Mapeamento de Sintomas</h2>
+        <p>Selecione o que você está sentindo fisicamente no momento:</p>
+        <div class="symptom-grid">
+          <button type="button" class="chip" data-sintoma="Gastrite Nervosa">🤢 Gastrite Nervosa</button>
+          <button type="button" class="chip" data-sintoma="Enxaqueca de Tensão">🧠 Enxaqueca de Tensão</button>
+          <button type="button" class="chip" data-sintoma="Taquicardia">💓 Taquicardia / Palpitação</button>
+          <button type="button" class="chip" data-sintoma="Falta de Ar">🫁 Falta de Ar</button>
+          <button type="button" class="chip" data-sintoma="Tensão Muscular">⚡ Tensão Muscular</button>
+        </div>
+        <div id="sintomas-resumo" class="info-box" style="display:none;"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

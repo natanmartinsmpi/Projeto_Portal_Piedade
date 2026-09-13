@@ -1,0 +1,25 @@
+{
+  "short_name": "Piedade PWA",
+  "name": "Portal de Assistência Piedade",
+  "description": "Portal de acolhimento e assistência Piedade.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1B365D",
+  "theme_color": "#1B365D",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192/1B365D/FFFFFF?text=Piedade",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://via.placeholder.com/512/1B365D/FFFFFF?text=Piedade",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ]
+}
